@@ -8,6 +8,7 @@ namespace LojaApi.Infraestructure.Context
         public LojaApiDbContext(DbContextOptions<LojaApiDbContext> options) : base(options) { }
 
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

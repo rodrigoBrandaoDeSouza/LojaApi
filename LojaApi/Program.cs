@@ -23,6 +23,7 @@ builder.Services.AddSwaggerGen(
              Contact = new OpenApiContact() { Name = "Rodrigo Brandão de Souza", Email = "rodrigotoo58@gmail.com" },
              License = new OpenApiLicense() { Name = "MIT License", Url = new Uri("https://opensource.org/licenses/MIT") }
          });
+         c.ResolveConflictingActions(x => x.First());
      }
 );
 

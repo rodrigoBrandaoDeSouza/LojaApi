@@ -1,4 +1,6 @@
-﻿namespace LojaApi.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace LojaApi.Domain.Entities
 {
     public class OrderItem
     {
@@ -9,7 +11,10 @@
             Quantity = quantity;
         }
 
-        public Guid OrderItemId { get; set; } = Guid.NewGuid();
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid Id { get; set; } = Guid.NewGuid();
+
+        public Guid OrderId { get; set; }
         public int Quantity { get; set; }
     }
 }

@@ -14,17 +14,17 @@ namespace LojaApi.Infraestructure.Repositories
             _dbContext = dbContext;
         }
 
-        public Task UpdateOrderAsync(Order order)
+        public async Task AddOrderItemAsync(Order order, OrderItem orderItem)
         {
-            _dbContext.Orders.Update(order);
-            _dbContext.SaveChanges();
+            order.OrderItens.Add(orderItem);
 
-            return Task.CompletedTask;
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<Order> GetOrderByIdAsync(Guid orderId)
         {
-            return await _dbContext.Orders.FirstOrDefaultAsync(x => x.OrderId == orderId);
+            return await _dbContext.Orders.Include(z=> z.OrderItens)
+                .FirstOrDefaultAsync(x => x.Id == orderId);
         }
 
         public async Task<Guid> InsertOrderAsync(Order order)
@@ -32,14 +32,20 @@ namespace LojaApi.Infraestructure.Repositories
             await _dbContext.Orders.AddAsync(order);
             await _dbContext.SaveChangesAsync();
 
-            return order.OrderId;
+            return order.Id;
         }
 
         public Task<List<Order>> GetAllAsync()
         {
-            var teste = _dbContext.Orders.ToListAsync();
+            return _dbContext.Orders
+                .Include(z => z.OrderItens)
+                .ToListAsync();
+        }
 
-            return teste;
+        public async Task UpdateOrderAsync(Order order)
+        {
+            _dbContext.Orders.Update(order);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -37,6 +37,7 @@ builder.Services.AddDbContext<LojaApiDbContext>(options =>
     options.UseInMemoryDatabase("LojaApiOnMemory"));
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 
 var app = builder.Build();
 

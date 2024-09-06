@@ -9,24 +9,26 @@ namespace LojaApi.Application.Handlers
     public class RemoveOrderItemCommandHandler : IRequestHandler<RemoveOrderItemCommand, string>
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderItemRepository _orderItemRepository;
 
-        public RemoveOrderItemCommandHandler(IOrderRepository orderRepository)
+        public RemoveOrderItemCommandHandler(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository)
         {
             _orderRepository = orderRepository;
+            _orderItemRepository = orderItemRepository;
         }
 
         public async Task<string> Handle(RemoveOrderItemCommand request, CancellationToken cancellationToken)
         {
-            Order order = await _orderRepository.GetOrderByIdAsync(request.OrderId);
+            OrderItem orderItem = await _orderItemRepository.GetByIdAsync(request.OrderItemId);
 
-            if (order == null)
+            Order order = await _orderRepository.GetOrderByIdAsync(orderItem.OrderId);
+
+            if (order == null || orderItem == null)
             {
                 return Mensagens.PedidoInexistente;
             }
 
-            order.OrderItens.Remove(request.OrderItem);
-
-            await _orderRepository.UpdateOrderAsync(order);
+            await _orderItemRepository.DeleteOrderItemAsync(orderItem);
 
             return Mensagens.ProdutoRemovidoComSucesso;
         }

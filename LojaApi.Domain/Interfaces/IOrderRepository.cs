@@ -8,6 +8,8 @@ namespace LojaApi.Domain.Interfaces
 
         Task<Order> GetOrderByIdAsync(Guid orderId);
 
+        Task AddOrderItemAsync(Order order, OrderItem orderItem);
+
         Task UpdateOrderAsync(Order order);
 
         Task<List<Order>> GetAllAsync();

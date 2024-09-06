@@ -5,7 +5,6 @@ namespace LojaApi.Application.Commands
 {
     public class RemoveOrderItemCommand : IRequest<string>
     {
-        public Guid OrderId { get; set; }
-        public OrderItem OrderItem { get; set; } = new OrderItem();
+        public Guid OrderItemId { get; set; }
     }
 }

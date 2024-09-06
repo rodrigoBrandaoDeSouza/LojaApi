@@ -1,5 +1,4 @@
-﻿using LojaApi.Domain.Entities;
-using MediatR;
+﻿using MediatR;
 
 namespace LojaApi.Application.Commands
 {

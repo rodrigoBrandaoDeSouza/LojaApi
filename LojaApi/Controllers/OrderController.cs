@@ -48,7 +48,7 @@ namespace LojaApi.Controllers
         }
 
         [HttpGet("GetAllOrders")]
-        [SwaggerOperation(Summary = "Retrieve all orders")]
+        [SwaggerOperation(Summary = "Retrieve all orders. Order status: 1 = Open, 2 = Closed")]
         public async Task<IEnumerable<Order>> GetAllOrders()
         {
             GetAllOrdersQuery request = new GetAllOrdersQuery();
@@ -57,7 +57,7 @@ namespace LojaApi.Controllers
         }
 
         [HttpGet("GetOrderById")]
-        [SwaggerOperation(Summary = "Retrieve a order by id")]
+        [SwaggerOperation(Summary = "Retrieve a order by id. Order status: 1 = Open, 2 = Closed")]
         public async Task<Order> GetOrderById([FromQuery] Guid orderId)
         {
             return await _mediator.Send(new GetOrderByIdQuery(orderId));

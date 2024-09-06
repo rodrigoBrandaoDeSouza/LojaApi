@@ -14,5 +14,10 @@ namespace LojaApi.Infraestructure.Context
         {
             optionsBuilder.UseInMemoryDatabase("LojaApiOnMemory");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>().HasMany(x => x.OrderItens).WithOne().HasForeignKey(z => z.OrderId);
+        }
     }
 }
